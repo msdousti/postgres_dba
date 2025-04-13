@@ -50,25 +50,25 @@ select 'Uptime', (now() - pg_postmaster_start_time())::interval(0)::text
 union all
 select
   'Checkpoints',
-  (select (checkpoints_timed + checkpoints_req)::text from pg_stat_bgwriter)
+  (select (:checkpoint_timed_column + :checkpoint_requested_column)::text from :checkpoint_tbl)
 union all
 select
   'Forced Checkpoints',
   (
-    select round(100.0 * checkpoints_req::numeric /
-      (nullif(checkpoints_timed + checkpoints_req, 0)), 1)::text || '%'
-    from pg_stat_bgwriter
+    select round(100.0 * :checkpoint_requested_column::numeric /
+      (nullif(:checkpoint_timed_column + :checkpoint_requested_column, 0)), 1)::text || '%'
+    from :checkpoint_tbl
   )
 union all
 select
   'Checkpoint MB/sec',
   (
-    select round((nullif(buffers_checkpoint::numeric, 0) /
+    select round((nullif(:buffers_column::numeric, 0) /
       ((1024.0 * 1024 /
         (current_setting('block_size')::numeric))
           * extract('epoch' from now() - stats_reset)
       ))::numeric, 6)::text
-    from pg_stat_bgwriter
+    from :checkpoint_tbl
   )
 union all
 select repeat('-', 33), repeat('-', 88)
