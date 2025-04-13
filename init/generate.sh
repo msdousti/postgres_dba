@@ -36,6 +36,19 @@ select current_setting('server_version_num')::integer >= 90600 as postgres_dba_p
   select :postgres_dba_wide as postgres_dba_wide \gset
   reset client_min_messages;
 \endif
+
+select current_setting('server_version_num')::integer >= 170000 as postgres_dba_pgvers_17plus \gset
+\if :postgres_dba_pgvers_17plus
+  \set checkpoint_tbl pg_stat_checkpointer
+  \set checkpoint_timed_column num_timed
+  \set checkpoint_requested_column num_requested
+  \set buffers_column buffers_written
+\else
+  \set checkpoint_tbl pg_stat_bgwriter
+  \set checkpoint_timed_column checkpoints_timed
+  \set checkpoint_requested_column checkpoints_req
+  \set buffers_column buffers_checkpoint
+\endif
 VersCheck
 
 echo "\\ir $WARMUP" >> "$OUT"
