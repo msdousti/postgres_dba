@@ -18,7 +18,7 @@
 \echo '  i5 – Cleanup unused and redundant indexes – DO & UNDO migration DDL'
 \echo '  l1 – Lock trees (leightweight)'
 \echo '  l2 – Lock trees, detailed (based on pg_blocking_pids())'
-\echo '  m1 – Monitor index creation'
+\echo '  m1 – Monitor index & reindex'
 \echo '  m2 – Monitor vacuum'
 \echo '  m3 – Monitor cluster & vacuum full'
 \echo '  m4 – Monitor analyze'

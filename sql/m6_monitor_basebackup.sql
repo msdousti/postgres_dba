@@ -1,3 +1,6 @@
+--Monitor basebackup
+-- Based on: https://dev.to/bolajiwahab/progress-reporting-in-postgresql-1i0d
+
 SELECT
     a.datname AS database_name,
     p.pid,

@@ -1,3 +1,6 @@
+--Monitor cluster & vacuum full
+-- Based on: https://dev.to/bolajiwahab/progress-reporting-in-postgresql-1i0d
+
 select
     p.datname as database_name,
     p.pid,
